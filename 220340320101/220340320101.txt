@@ -1,0 +1,98 @@
+Q1)
+create schema exam;
+use exam;
+
+1) create table DEPT (DEPTNO int, DNAME varchar(15), LOC varchar(10));
+
+insert into DEPT  values 
+(10,'ACCOUNTING','NEW YORK'),
+(20,'RESEARCH','DALLAS'),(30,'SALES','CHICAGO'),(40,'OPERATIONS','BOSTON') ;
+------------------------------------
+2) create table EMP (EMPNO int(4), ENAME varchar(10), JOB varchar(9), 
+HIREDATE date, SAl float(7,2) , COMM float(7,2) , DEPTNO int );
+
+insert into EMP values (7839, 'KING', 'MANAGER', '1991-11-17', 5000, NULL, 10),
+(7698, 'BLAKE', 'CLERK', '1981-05-01', 2850, NULL, 30),
+(7782, 'CLARK', 'MANAGER', '1981-06-09', 2450 ,NULL, 10),
+(7566, 'JONES', 'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654 ,'MARTIN', 'SALESMAN', '1981-09-28', 1250, 1400, 30),
+(7499, 'ALLEN', 'SALESMAN', '1981-02-20', 1600, 300, 30);
+---------------------------------------
+select * from emp;
+select * from dept;
+--------------------------------------
+3) select * from emp where sal between 2500 and 5000;
+
+4) select ename from emp order by ename desc;
+
+5) select lower(job) from emp;
+
+6) select ename, length(ename) from emp;
+
+7) select deptno, count(deptno) from emp group by deptno;
+
+8) select dname , ename from dept,emp where
+  dept.deptno = emp.deptno;
+
+9) select position("AR" in ename) from emp;
+
+10) select ename, (sal*0.2) "HRA" from emp;
+
+
+
+========================================================
+
+Q2)
+delimiter //
+create procedure PROC1(x varchar(20),y varchar(20))
+begin
+if instr(x,y) >0  then
+	insert into demo values ('exists');
+    else
+    insert into demo values ('not exists');
+end if;
+end; //
+delimiter ;
+
+
+
+call PROC1('cdac','dac');
+
+create table demo (output char(10));
+
+select * from demo;
+
+=======================================================
+
+Q3)
+delimiter //
+create function FUNC1(x float,y float,z float)
+returns boolean
+deterministic
+begin
+	if x+y > z and y+z > x and z+x > y then return true;
+	else return false;
+    end if;
+end; //
+delimiter ;
+
+
+delimiter //
+create procedure output()
+begin
+	declare m boolean;
+    set m = FUNC1(3,4,5);
+    insert into out_put values(m);
+end; //
+delimiter ;
+    
+    
+create table out_put (tf boolean);
+
+select * from out_put;
+
+call output();
+
+
+======================================================
+		THANK YOU !
